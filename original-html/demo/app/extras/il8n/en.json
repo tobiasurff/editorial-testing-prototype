@@ -1,0 +1,12 @@
+{
+    "MENU": {
+        "EXTRAS": {
+        	"EXTRAS": "Extras",
+            "GALLERY": "Gallery",
+            "AVATARS": "Avatars",
+            "404": "404 Page",
+            "500": "500 Page",
+            "BLANK": "Blank Page"
+        }
+    }
+}
