@@ -6,6 +6,7 @@ var _  = require('underscore'),
 
 module.exports = {
 	respond: function (req,res,data,isJSON) {
+    debugger;
     var localData = {};
 
     // Add passed in data

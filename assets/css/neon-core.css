@@ -6917,7 +6917,6 @@ textareatable .replace-inputs input {
   line-height: 0;
   margin: 0;
   padding: 0;
-  vertical-align: bottom;
 }
 .tile-stats .icon i:before {
   margin: 0;

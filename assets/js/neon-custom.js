@@ -834,81 +834,48 @@ var public_vars = public_vars || {};
 				}
 			});
 		}
+	      
 
+		// Date picker options
+		var datePickerOptions = {
+	        startDate: moment().subtract(29, 'days'),
+	        endDate: moment(),
+	        minDate: '01/01/2012',
+	        maxDate: '12/31/2015',
+	        dateLimit: { days: 60 },
+	        showDropdowns: true,
+	        showWeekNumbers: true,
+	        timePicker: false,
+	        timePickerIncrement: 1,
+	        timePicker12Hour: true,
+	        ranges: {
+	           'Today': [moment(), moment()],
+	           'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+	           'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+	           'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+	           'This Month': [moment().startOf('month'), moment().endOf('month')],
+	           'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+	        },
+	        opens: 'right',
+	        buttonClasses: ['btn btn-default'],
+	        applyClass: 'btn-sm btn-primary',
+	        cancelClass: 'btn-sm',
+	        format: 'MM/DD/YYYY',
+	        separator: ' to ',
+	        locale: {
+	            applyLabel: 'Submit',
+	            cancelLabel: 'Clear',
+	            fromLabel: 'From',
+	            toLabel: 'To',
+	            customRangeLabel: 'Custom',
+	            daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr','Sa'],
+	            monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+	            firstDay: 1
+	        }
+	    };
 
-
-
-		// Date Range Picker
-		if($.isFunction($.fn.daterangepicker))
-		{
-			$(".daterange").each(function(i, el)
-			{
-				// Change the range as you desire
-				var ranges = {
-					'Today': [moment(), moment()],
-					'Yesterday': [moment().subtract('days', 1), moment().subtract('days', 1)],
-					'Last 7 Days': [moment().subtract('days', 6), moment()],
-					'Last 30 Days': [moment().subtract('days', 29), moment()],
-					'This Month': [moment().startOf('month'), moment().endOf('month')],
-					'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
-				};
-
-				var $this = $(el),
-					opts = {
-						format: attrDefault($this, 'format', 'MM/DD/YYYY'),
-						timePicker: attrDefault($this, 'timePicker', false),
-						timePickerIncrement: attrDefault($this, 'timePickerIncrement', false),
-						separator: attrDefault($this, 'separator', ' - '),
-					},
-					min_date = attrDefault($this, 'minDate', ''),
-					max_date = attrDefault($this, 'maxDate', ''),
-					start_date = attrDefault($this, 'startDate', ''),
-					end_date = attrDefault($this, 'endDate', '');
-
-				if($this.hasClass('add-ranges'))
-				{
-					opts['ranges'] = ranges;
-				}
-
-				if(min_date.length)
-				{
-					opts['minDate'] = min_date;
-				}
-
-				if(max_date.length)
-				{
-					opts['maxDate'] = max_date;
-				}
-
-				if(start_date.length)
-				{
-					opts['startDate'] = start_date;
-				}
-
-				if(end_date.length)
-				{
-					opts['endDate'] = end_date;
-				}
-
-
-				$this.daterangepicker(opts, function(start, end)
-				{
-					var drp = $this.data('daterangepicker');
-
-					if($this.is('[data-callback]'))
-					{
-						//daterange_callback(start, end);
-						callback_test(start, end);
-					}
-
-					if($this.hasClass('daterange-inline'))
-					{
-						$this.find('span').html(start.format(drp.format) + drp.separator + end.format(drp.format));
-					}
-				});
-			});
-		}
-
+		$('#reportrange span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
+	    $('#reportrange').daterangepicker(datePickerOptions, datePickCallback);
 
 
 
@@ -1786,11 +1753,16 @@ function attrDefault($el, data_var, default_val)
 
 
 // Test function
-function callback_test()
+function daterange_callback(page)
 {
-	alert("Callback function executed! No. of arguments: " + arguments.length + "\n\nSee console log for outputed of the arguments.");
+	if(page == 'goals'){
+		date_pick_goals(arguments);
+	}else if(page == 'experiment'){
+		date_pick_experiments(arguments);
+	}
+	// alert("Callback function executed! No. of arguments: " + arguments.length + "\n\nSee console log for outputed of the arguments.");
 
-	console.log(arguments);
+	// console.log(arguments);
 }
 
 

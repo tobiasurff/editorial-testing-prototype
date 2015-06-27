@@ -9,4 +9,16 @@ router.get('/', function(req, res) {
 	middleware.respond(req, res);
 });
 
+router.get('/experiments', function(req, res) {
+	middleware.respond(req, res);
+});
+
+router.get('/goals', function(req, res) {
+	middleware.respond(req, res);
+});
+
+router.get('/new-account', function(req, res) {
+	middleware.respond(req, res);
+});
+
 module.exports = router;

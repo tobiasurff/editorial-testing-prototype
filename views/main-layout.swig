@@ -13,6 +13,7 @@
 	{% if config.environment == 'local'%}
 		<link rel="stylesheet" href="/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
 		<link rel="stylesheet" href="/css/font-icons/entypo/css/entypo.css">
+		<link rel="stylesheet" href="/css/font-icons/font-awesome/css/font-awesome.css">
 		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic">
 		<link rel="stylesheet" href="/css/bootstrap.css">
 		<link rel="stylesheet" href="/css/neon-core.css">
@@ -67,24 +68,52 @@
 			<ul id="main-menu" class="main-menu">
 				<!-- add class "multiple-expanded" to allow multiple submenus to open -->
 				<!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
-				<li class="active opened active">
+				<li class="active opened">
 					<a href="index.html">
-						<i class="entypo-gauge"></i>
-						<span class="title">Accounts</span>
+						<span class="title">Account 1</span>
 					</a>
 					<ul>
-						<li class="active">
-							<a href="index.html">
-								<span class="title">Account 1</span>
+						<li>
+							<a href="/">
+								<i class="fa fa-flask fa-fw"></i>
+								<span class="title">Experiments</span>
 							</a>
 						</li>
 						<li>
-							<a href="dashboard-2.html">
-								<span class="title">Dashboard 2</span>
+							<a href="/goals">
+								<i class="fa fa-line-chart fa-fw"></i>
+								<span class="title">Goals</span>
 							</a>
 						</li>
 					</ul>
 				</li>
+				<li class="">
+					<a href="/">
+						<span class="title">Account 1</span>
+					</a>
+					<ul>
+						<li>
+							<a href="/">
+								<i class="fa fa-flask fa-fw"></i>
+								<span class="title">Experiments</span>
+							</a>
+						</li>
+						<li>
+							<a href="/goals">
+								<i class="fa fa-line-chart fa-fw"></i>
+								<span class="title">Goals</span>
+							</a>
+						</li>
+					</ul>
+				</li>
+
+				<li class="">
+					<a href="/new-account">
+						<i class="entypo-plus-circled"></i>
+						<span class="title">New Account</span>
+					</a>
+				</li>
+
 			</ul>
 		</div>
 	</div>
@@ -102,7 +131,7 @@
 		
 						<a class="dropdown-toggle">
 							<img src="/images/thumb-1@2x.png" alt="" class="img-circle" width="44" />
-							John Henderson
+							Brad Taylor
 						</a>
 					</li>
 		
@@ -126,104 +155,13 @@
 
 		<hr />
 		
-		
-		<script type="text/javascript">
-		jQuery(document).ready(function($)
-		{
-			// Sample Toastr Notification
-			setTimeout(function()
-			{
-				var opts = {
-					"closeButton": true,
-					"debug": false,
-					"positionClass": rtl() || public_vars.$pageContainer.hasClass('right-sidebar') ? "toast-top-left" : "toast-top-right",
-					"toastClass": "black",
-					"onclick": null,
-					"showDuration": "300",
-					"hideDuration": "1000",
-					"timeOut": "5000",
-					"extendedTimeOut": "1000",
-					"showEasing": "swing",
-					"hideEasing": "linear",
-					"showMethod": "fadeIn",
-					"hideMethod": "fadeOut"
-				};
-		
-				toastr.success("You have been awarded with 1 year free subscription. Enjoy it!", "Account Subcription Updated", opts);
-			}, 3000);
-		
-		});
-		
-		
-		function getRandomInt(min, max)
-		{
-			return Math.floor(Math.random() * (max - min + 1)) + min;
-		}
-		</script>
-		
-		
-		<div class="row">
-			<div class="col-sm-3 col-xs-6">
-		
-				<div class="tile-stats tile-red">
-					<div class="icon"><i class="entypo-users"></i></div>
-					<div class="num" data-start="0" data-end="83" data-postfix="" data-duration="1500" data-delay="0">0</div>
-		
-					<h3>Unique Visitors</h3>
-					<p>total visitors shown experiments</p>
-				</div>
-		
-			</div>
-		
-			<div class="col-sm-3 col-xs-6">
-		
-				<div class="tile-stats tile-green">
-					<div class="icon"><i class="entypo-chart-bar"></i></div>
-					<div class="num" data-start="0" data-end="135" data-postfix="" data-duration="1500" data-delay="600">0</div>
-		
-					<h3>Experiments Ran</h3>
-					<p>total number of experiments ran</p>
-				</div>
-		
-			</div>
-		
-			<div class="col-sm-3 col-xs-6">
-		
-				<div class="tile-stats tile-aqua">
-					<div class="icon"><i class="entypo-mail"></i></div>
-					<div class="num" data-start="0" data-end="23" data-postfix="" data-duration="1500" data-delay="1200">0</div>
-		
-					<h3>Total Revenue</h3>
-					<p>total revenue generated</p>
-				</div>
-		
-			</div>
-		
-			<div class="col-sm-3 col-xs-6">
-		
-				<div class="tile-stats tile-blue">
-					<div class="icon"><i class="entypo-rss"></i></div>
-					<div class="num" data-start="0" data-end="52" data-postfix="" data-duration="1500" data-delay="1800">0</div>
-		
-					<h3>Average lift</h3>
-					<p>average lift conversion</p>
-				</div>
-		
-			</div>
-		</div>
-		
-		<br />
-		
-		<div class="row">
-			<div class="col-sm-12">
-			{% block content %}{% endblock %}
-			</div>
-		</div>
+
+		{% block content %}{% endblock %}
 
 		<!-- Footer -->
 		<footer class="main">
 			
-			&copy; 2014 <strong>Neon</strong> Admin Theme by <a href="http://laborator.co" target="_blank">Laborator</a>
+			&copy; 2015 <strong>Optimizely</strong>
 		
 		</footer>
 	</div><!-- end sidebar-menu -->
@@ -237,6 +175,8 @@
 		<link rel="stylesheet" href="/js/datatables/responsive/css/datatables.responsive.css">
 		<link rel="stylesheet" href="/js/select2/select2-bootstrap.css">
 		<link rel="stylesheet" href="/js/select2/select2.css">
+		<link rel="stylesheet" href="/js/selectboxit/jquery.selectBoxIt.css">
+		<link rel="stylesheet" href="/js/daterangepicker/daterangepicker-bs3.css">
 
 		<!-- Bottom scripts (common) -->
 		<script src="/js/gsap/main-gsap.js"></script>
@@ -252,6 +192,12 @@
 		<script src="/js/datatables/jquery.dataTables.columnFilter.js"></script>
 		<script src="/js/datatables/lodash.min.js"></script>
 		<script src="/js/datatables/responsive/js/datatables.responsive.js"></script>
+		<script src="/js/daterangepicker/moment.min.js"></script>
+		<script src="/js/daterangepicker/daterangepicker.js"></script>
+		<script src="/js/raphael-min.js"></script>
+		<script src="/js/morris.min.js"></script>
+		<script src="/js/select2/select2.min.js"></script>
+		<script src="/js/selectboxit/jquery.selectBoxIt.min.js"></script>
 		<script src="/js/select2/select2.min.js"></script>
 		<!-- JavaScripts initializations and stuff -->
 		<script src="/js/neon-custom.js"></script>
