@@ -14,6 +14,8 @@ var env = require('./config/' + process.env.NODE_ENV);
 var routes = require('./routes/index');
 var authRoutes = require('./routes/auth');
 var accountRoutes = require('./routes/account');
+var userRoutes = require('./routes/user');
+var goalsRoutes = require('./routes/goals');
 
 var app = express();
 
@@ -53,6 +55,8 @@ mongoose.connect('mongodb://'+
 app.use('/', routes);
 app.use('/', authRoutes);
 app.use('/', accountRoutes);
+app.use('/', userRoutes);
+app.use('/', goalsRoutes);
 
 
 // catch 404 and forward to error handler

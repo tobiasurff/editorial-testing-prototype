@@ -71,7 +71,6 @@ var neonRegister = neonRegister || {};
 							},
 							success: function(response)
 							{
-								debugger;
 
 								
 								

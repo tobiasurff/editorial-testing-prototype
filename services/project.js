@@ -1,17 +1,16 @@
 var OptimizelyClient = require('optimizely-node-client');
 var env = require('../config/' + process.env.NODE_ENV);
+var Q = require("q");
 
 
 module.exports = {
-	getResultsForExperiment: function (account,expId,cb){
+	getProject: function(account,cb){
 		var oc = new OptimizelyClient(account.apiToken);
-		oc.getStats(projectId)
-		.then(function(goals){
-			cb(goals);
+		oc.getProjects()
+		.then(function(projects){
+			cb(projects);
 		},function(err){
 			cb(null,err);
 		});
 	}
 };
-
-

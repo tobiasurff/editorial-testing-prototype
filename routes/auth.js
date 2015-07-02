@@ -12,9 +12,7 @@ var env = require('../config/' + process.env.NODE_ENV);
 
 
 router.post('/register', function(req, res) {
-	debugger;
 	User.register(new User({ email : req.body.email }), req.body.password, function(err, user) {
-		debugger;
 	    if (err) {
 	    	return res.json({error:'The user already exists'});
 	    }
@@ -33,7 +31,6 @@ router.get('/login', function(req, res) {
 
 router.post('/login', function handleLocalAuthentication(req, res, next) {
     passport.authenticate('local', function(err, user, info) {
-    	debugger;
         if (err) return next(err);
         if (!user) {
             return res.json(403, {
@@ -47,7 +44,8 @@ router.post('/login', function handleLocalAuthentication(req, res, next) {
             if (err) return next(err);
             return res.json({
                 login_status: 'success',
-                redirect_url: env.domains.www
+                redirect_url: env.domains.www,
+                user:user
             });
         });
 
