@@ -4,6 +4,7 @@ var mongoose = require('mongoose'),
 var Account = new Schema({
     apiToken: String,
     userId: String,
+    optly_account_id:Number, 
     lastUpdatedDate: Date,
     name: String
 });

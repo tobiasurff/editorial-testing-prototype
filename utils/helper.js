@@ -14,5 +14,16 @@ module.exports = {
     months[10] = 'Nov';
     months[11] = 'Dec';
     return months[intMonth];
+  },
+  splitStringToArray: function(string,delimeter){
+    var array = [];
+    if(typeof string != 'undefined' && string.length > 0){
+        if(string.indexOf(',') > 0){
+            array = string.split(',');
+        }else{
+            array.push(string);
+        }
+    }
+    return array;
   }
 }

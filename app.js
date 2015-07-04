@@ -16,6 +16,7 @@ var authRoutes = require('./routes/auth');
 var accountRoutes = require('./routes/account');
 var userRoutes = require('./routes/user');
 var goalsRoutes = require('./routes/goals');
+var experimentRoutes = require('./routes/experiment');
 
 var app = express();
 
@@ -57,6 +58,7 @@ app.use('/', authRoutes);
 app.use('/', accountRoutes);
 app.use('/', userRoutes);
 app.use('/', goalsRoutes);
+app.use('/', experimentRoutes);
 
 
 // catch 404 and forward to error handler

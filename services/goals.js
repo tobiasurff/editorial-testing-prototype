@@ -50,7 +50,7 @@ filterGoalResults = function(allResults,goalId,expIds){
 				filteredGoalResults.push(result);
 			}
 		}
-		experiment.goalResults = filteredGoalResults;
+		experiment.results = filteredGoalResults;
 		allExperimentGoalResults.push(experiment);	
 	}
 	return allExperimentGoalResults;

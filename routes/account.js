@@ -29,9 +29,10 @@ router.post('/api/account', function(req, res) {
 
 router.get('/api/account/:id/projects', function(req, res) {
 	var acctId = req.params.id;
+	var options = req.query || {};
 	Account.findById(acctId, function(err,account){
 		if(!err){
-			AccountService.getProjects(account,function(projects,err){
+			ProjectService.getProjects(account,options,function(projects,err){
 				res.json({projects:projects});
 			});
 		}else{
