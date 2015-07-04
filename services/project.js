@@ -41,7 +41,6 @@ module.exports = {
 	getProjectIds: function(account,query,cb){
 		var options = query || {};
 		var projectIds = helper.splitStringToArray(options.projectIds);
-		debugger;
 		if(projectIds.length == 0){
 			// Get all project Ids for use
 			var fields = 'id';

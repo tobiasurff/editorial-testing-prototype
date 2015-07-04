@@ -38,7 +38,6 @@ module.exports = {
 					$or: orCondition
 				};
 
-				debugger;
 				dbService.getLocalData(Experiment,query,fields,function(err,results){
 					if(!err){
 						cb(results);
