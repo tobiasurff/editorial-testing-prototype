@@ -38,7 +38,7 @@ OptimizelyAPI.prototype.authorizeClient = function() {
         "&state=12345" +
         "&redirect_uri=" + "https:" + window.location.href.substring(window.location.protocol.length);
 
-    //window.location.href = authUrl;
+    window.location.href = authUrl;
 }
 
 OptimizelyAPI.prototype.extractToken = function(hash) {
