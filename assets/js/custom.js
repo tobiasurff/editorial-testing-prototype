@@ -18,7 +18,7 @@ window.optimizelyTemplateTool = {
 
         $(document).ready(function() {
             // Fill JSON config if available
-            $('#step_configure .configuration').val(app_config_string);
+            $('#step_configure .configuration').val(app_config_string ? app_config_string : '');
             // CodeMirror textarea
             var editor = CodeMirror.fromTextArea(document.getElementById('configuration'), {
                 mode: "text/javascript",
