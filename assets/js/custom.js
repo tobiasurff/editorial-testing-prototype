@@ -60,18 +60,23 @@ window.optimizelyTemplateTool = {
 
                         var li_item = $('<li class="lego-form-field__item">\
                             <label class="lego-label" for="' + key + '">' + key + '</label>\
-                            <p class="img_preview"></p>\
+                            <div class="preview"></div>\
                         </li>');
                         var el = $('<input name="' + key + '" type="filepicker" class="lego-button lego-button--brand">')
                             .attr(app_config.placeholders.variation[key].options)
                             .change(function(event) {
-                                // TODO: Add some kind of image preview to the form to give feedback that upload worked.
-                                //console.log(event.originalEvent.fpfile.url);
+                                $(li_item).find('.preview').html('<p><img src="' + event.originalEvent.fpfile.url + '"></p>').prepend('<p>').prepend(el);
+                                $(el).attr({
+                                        'class': '',
+                                        'disabled': 'true'
+                                    }).addClass('lego-text-input').show();
                             });
 
                         $(li_item).append(el).appendTo('#variation-level');
 
                         filepicker.constructWidget(el);
+
+                        $(el).detach();
 
                     } else {
                         $('#variation-level')

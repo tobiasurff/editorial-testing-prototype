@@ -30,8 +30,8 @@ h1 {
 }
 
 .CodeMirror {
-  border: 1px solid #eee;
-  height: auto;
+    border: 1px solid #eee;
+    height: auto;
 }
 
 #connect_to_optly {
@@ -50,6 +50,11 @@ h1 {
 
 .step {
     display: none;
+}
+
+.preview img {
+    max-width: 150px;
+    max-height: 150px;
 }
 
 #overlay {
