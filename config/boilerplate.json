@@ -19,7 +19,7 @@
         "description": "{{New Title}}",
         "js_component": "/*_optimizely_evaluate=force*/\r\nwindow.optimizelyEditorial.decorateItem({{Article ID}},\r\n{\r\n  title: \"{{New Title}}\",\r\n  subtitle: \"{{New Subtitle}}\",\r\n  teaserimage: \"{{New Teaser Image}}\"\r\n});"
     }],
-    "goals": [{
+    "goals": [{ 
             "goal_type": 3,
             "addable": false,
             "urls": [
