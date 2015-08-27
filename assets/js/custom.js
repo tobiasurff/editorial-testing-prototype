@@ -62,7 +62,7 @@ window.optimizelyTemplateTool = {
                             <label class="lego-label" for="' + key + '">' + key + '</label>\
                             <div class="preview"></div>\
                         </li>');
-                        var el = $('<input name="' + key + '" type="filepicker" class="lego-button lego-button--brand">')
+                        var el = $('<input name="' + key + '" type="filepicker" class="lego-button lego-button--brand" value="">')
                             .attr(app_config.placeholders.variation[key].options)
                             .change(function(event) {
                                 $(li_item).find('.preview').html('<p><img src="' + event.originalEvent.fpfile.url + '"></p>').prepend('<p>').prepend(el);
