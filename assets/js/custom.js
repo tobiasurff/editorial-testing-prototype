@@ -128,7 +128,7 @@ window.optimizelyTemplateTool = {
                             if (typeof value === "string") {
                                 for (var key in app_config.placeholders.variation) {
                                     var fieldvalue = $("#variation-level input[name=\"" + key + "\"]").val() ? $("#variation-level input[name=\"" + key + "\"]").val() : "";
-                                    var value = value.replace(new RegExp("{{" + key + "}}", 'g'), fieldvalue );
+                                    var value = value.replace(new RegExp("{{" + key + "}}", 'g'), escape(fieldvalue) );
                                 }
                             }
                             return value;
@@ -143,8 +143,8 @@ window.optimizelyTemplateTool = {
                 experiment_definition = JSON.parse(JSON.stringify(experiment_definition, function(key, value) {
                     if (typeof value === "string") {
                         for (var key in app_config.placeholders.experiment) {
-                            value = value.replace(new RegExp("{{" + key + "}}", 'g'), $("#experiment-level input[name=\"" + key + "\"]")
-                                .val());
+                            var fieldvalue = $("#experiment-level input[name=\"" + key + "\"]").val() ? $("#experiment-level input[name=\"" + key + "\"]").val() : "";
+                        var value = value.replace(new RegExp("{{" + key + "}}", 'g'), escape(fieldvalue));
                         }
                     }
                     return value;
