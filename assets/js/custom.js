@@ -67,9 +67,9 @@ window.optimizelyTemplateTool = {
                             .change(function(event) {
                                 $(li_item).find('.preview').html('<p><img src="' + event.originalEvent.fpfile.url + '"></p>').prepend('<p>').prepend(el);
                                 $(el).attr({
-                                        'class': '',
-                                        'disabled': 'true'
-                                    }).addClass('lego-text-input').show();
+                                    'class': '',
+                                    'disabled': 'true'
+                                }).addClass('lego-text-input').show();
                             });
 
                         $(li_item).append(el).appendTo('#variation-level');
@@ -127,7 +127,7 @@ window.optimizelyTemplateTool = {
                         var variation = JSON.parse(JSON.stringify(app_config.variations[1], function(key, value) {
                             if (typeof value === "string") {
                                 for (var key in app_config.placeholders.variation) {
-                                    value = value.replace(new RegExp("{{" + key + "}}", 'g'), $("#variation-level input[name=\"" + key + "\"]").val() ? $("#variation-level input[name=\"" + key + "\"]").val() : ""));
+                                    value = value.replace(new RegExp("{{" + key + "}}", 'g'), $("#variation-level input[name=\"" + key + "\"]").val() );
                                 }
                             }
                             return value;
