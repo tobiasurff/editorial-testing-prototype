@@ -127,7 +127,8 @@ window.optimizelyTemplateTool = {
                         var variation = JSON.parse(JSON.stringify(app_config.variations[1], function(key, value) {
                             if (typeof value === "string") {
                                 for (var key in app_config.placeholders.variation) {
-                                    value = value.replace(new RegExp("{{" + key + "}}", 'g'), $("#variation-level input[name=\"" + key + "\"]").val() );
+                                    var fieldvalue = $("#variation-level input[name=\"" + key + "\"]").val() ? $("#variation-level input[name=\"" + key + "\"]").val() : "";
+                                    var value = value.replace(new RegExp("{{" + key + "}}", 'g'), fieldvalue );
                                 }
                             }
                             return value;
