@@ -109,7 +109,6 @@ window.optimizelyTemplateTool = {
             function createExperimentDefinition() {
 
                 // Create new experiment_definition object containing experiment, original and goals
-
                 var experiment_definition = {
                     "experiment": app_config.experiment,
                     "variations": [
@@ -119,9 +118,7 @@ window.optimizelyTemplateTool = {
                     "conditional_code": app_config.conditional_code,
                     "activation_mode": app_config.activation_mode
                 };
-
                 // Add variations based on formsets and replace variation-level placeholders with actual values (using JSON.stringify's replacer function)
-
                 $('#variation-level')
                     .each(function(index, element) {
                         var variation = JSON.parse(JSON.stringify(app_config.variations[1], function(key, value) {
@@ -150,6 +147,8 @@ window.optimizelyTemplateTool = {
                     return value;
                 }));
 
+
+
                 return experiment_definition;
 
             }
@@ -163,6 +162,7 @@ window.optimizelyTemplateTool = {
 
                 optly.post("projects/" + app_config.project_id + '/experiments', experiment_definition.experiment, function(experiment) {
                     experiment_id = experiment.id;
+
                     updateVariations(experiment, experiment_definition);
                     addGoals(experiment, experiment_definition);
                 });
@@ -185,14 +185,35 @@ window.optimizelyTemplateTool = {
             }
 
             function addGoals(experiment, experiment_definition) {
-
-                // TODO: First remove all default goals, then add new ones
-                // TODO: Make one goal primary
+                // TO DO because of BUG-2364, the primary goal is not always set correctly
 
                 optimizelyTemplateTool.spinner('Adding goals…');
 
+                // remove engagement goal
+                optly.get("projects/" +app_config.project_id +"/goals", function(goals) {
+                    for (var key in goals) {
+                      goal = goals[key];
+                      var new_experiment_ids = [];
+                      if (goal.title == 'Engagement') {
+                        for (i = 0; i < goal.experiment_ids.length; i++) {
+                            if (goal.experiment_ids[i] != experiment_id) {
+                                new_experiment_ids.push(goal.experiment_ids[i]);
+                            }
+                        }
+                        update_experimentids = {
+                            "experiment_ids": new_experiment_ids
+                        };
+                        optly.put("goals/" +goal.id, update_experimentids, function() {});
+                      }
+                    }
+                });
+
+                // primary goal is first defined goal in the list 
+                var primary_goal_event_name = experiment_definition.goals[0].event;
+
                 for (var i = 0; i < experiment_definition.goals.length; i++) {
-                    if (typeof experiment_definition.goals[i] === "number") {
+                    var new_goal_definition = experiment_definition.goals[i];
+                    if (typeof new_goal_definition === "number") {
 
                         optly.get("goals/" + experiment_definition.goals[i], function(goal) {
                             var index = goal.experiment_ids.indexOf(experiment_definition.goals[i]);
@@ -202,19 +223,47 @@ window.optimizelyTemplateTool = {
                             update_experimentids = {
                                 "experiment_ids": goal.experiment_ids
                             };
-                            optly.put("goals/" + goal.id, update_experimentids, function() {})
+
+                            optly.put("goals/" + goal.id, update_experimentids, function() {});
                         });
 
-                    } else if (typeof experiment_definition.goals[i] === "object") {
+                    } else if (typeof new_goal_definition === "object") {
 
-                        optly.post("projects/" + app_config.project_id + "/goals/", experiment_definition.goals[i], function(goal) {
+                        optly.post("projects/" + app_config.project_id + "/goals/", new_goal_definition, function(goal) {
+
                             goal.experiment_ids.push(experiment_id);
                             update_experimentids = {
                                 "experiment_ids": goal.experiment_ids
                             };
-                            optly.put("goals/" + goal.id, update_experimentids, function() {})
-                        });
+                        
+                            optly.put("goals/" + goal.id, update_experimentids, function(goal) {
+                                // set the primary goal
+                                if (goal.event == primary_goal_event_name) {
+                                    primary_goal_config = {
+                                        "primary_goal_id": goal.id
+                                    };
+                                    var index = 0;
+                                    waitForUpdate = setInterval(function(){ 
+                                        optly.get("experiments/" + experiment_id, function(e) { 
+                                            for (j = 0; j < e.display_goal_order_lst.length; j++) {
+                                                if (e.display_goal_order_lst[j] == goal.id) {
+                                                    clearInterval(waitForUpdate);
+                                                    optly.put("experiments/" + experiment_id, primary_goal_config, function(e) {});
+                                                    break;
+                                                }
+                                            }
+                                            
+                                        });
+                                        if (index == 5) {
+                                            // This is a workaround until https://optimizely.atlassian.net/browse/BUG-2364 is fixed
+                                            clearInterval(waitForUpdate);
+                                        }
+                                        index++;
+                                    }, 1000);
 
+                                }   
+                            })
+                        });
                     }
                 }
             }
@@ -226,9 +275,21 @@ window.optimizelyTemplateTool = {
                 if (optly.outstandingRequests == 0) {
                     clearInterval(waitForExperiment);
                     optimizelyTemplateTool.spinner('Forwarding to Optimizely editor…');
-                    window.location.href = "https://www.optimizely.com/edit?experiment_id=" + experiment_id;
+
+                    if (app_config.redirect_url == "NO_REDIRECT") {
+                        optimizelyTemplateTool.spinner();
+                    } else if (app_config.redirect_url === undefined) {
+                        // just to be backward compatible but ideally no redirect_url would mean no redirect
+                        window.location.href = "https://www.optimizely.com/edit?experiment_id=" + experiment_id;
+                    } else {
+                        app_config.redirect_url = app_config.redirect_url.replace("{{Experiment ID}}", experiment_id);
+                        //window.location.href = app_config.redirect_url;
+                        var win = window.open(app_config.redirect_url, '_blank');
+                        win.focus();
+                        optimizelyTemplateTool.spinner();
+                    }
                 }
-            }, 300)
+            }, 300);
 
         });
 
@@ -286,8 +347,12 @@ window.optimizelyTemplateTool = {
         console.log(e);
     },
     spinner: function(message) {
-        $('#overlay').show();
-        $('#status').text(message || "Please wait…");
+        if (message != undefined) {
+            $('#overlay').show();
+            $('#status').text(message || "Please wait…");
+        } else {
+            $('#overlay').hide();
+        }
     }
 
 };
