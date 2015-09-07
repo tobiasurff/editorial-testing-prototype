@@ -276,7 +276,10 @@ window.optimizelyTemplateTool = {
                     clearInterval(waitForExperiment);
                     optimizelyTemplateTool.spinner('Forwarding to Optimizely editor…');
 
-                    if (app_config.redirect_url === undefined) {
+                    if (app_config.redirect_url == "NO_REDIRECT") {
+                        optimizelyTemplateTool.spinner();
+                    } else if (app_config.redirect_url === undefined) {
+                        // just to be backward compatible but ideally no redirect_url would mean no redirect
                         window.location.href = "https://www.optimizely.com/edit?experiment_id=" + experiment_id;
                     } else {
                         app_config.redirect_url = app_config.redirect_url.replace("{{Experiment ID}}", experiment_id);
