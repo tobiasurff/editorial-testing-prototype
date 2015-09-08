@@ -210,6 +210,8 @@ window.optimizelyTemplateTool = {
 
                 // primary goal is first defined goal in the list 
                 var primary_goal_event_name = experiment_definition.goals[0].event;
+                var goal_ids = [];
+                var primary_goal_id = "";
 
                 for (var i = 0; i < experiment_definition.goals.length; i++) {
                     var new_goal_definition = experiment_definition.goals[i];
@@ -224,6 +226,8 @@ window.optimizelyTemplateTool = {
                                 "experiment_ids": goal.experiment_ids
                             };
 
+                            goal_ids.push(goal.id.toString());
+
                             optly.put("goals/" + goal.id, update_experimentids, function() {});
                         });
 
@@ -231,41 +235,38 @@ window.optimizelyTemplateTool = {
 
                         optly.post("projects/" + app_config.project_id + "/goals/", new_goal_definition, function(goal) {
 
+                            goal_ids.push(goal.id.toString());
+
                             goal.experiment_ids.push(experiment_id);
                             update_experimentids = {
                                 "experiment_ids": goal.experiment_ids
                             };
                         
                             optly.put("goals/" + goal.id, update_experimentids, function(goal) {
-                                // set the primary goal
+                                // check if this is the primary goal
                                 if (goal.event == primary_goal_event_name) {
-                                    primary_goal_config = {
-                                        "primary_goal_id": goal.id
-                                    };
-                                    var index = 0;
-                                    waitForUpdate = setInterval(function(){ 
-                                        optly.get("experiments/" + experiment_id, function(e) { 
-                                            for (j = 0; j < e.display_goal_order_lst.length; j++) {
-                                                if (e.display_goal_order_lst[j] == goal.id) {
-                                                    clearInterval(waitForUpdate);
-                                                    optly.put("experiments/" + experiment_id, primary_goal_config, function(e) {});
-                                                    break;
-                                                }
-                                            }
-                                            
-                                        });
-                                        if (index == 5) {
-                                            // This is a workaround until https://optimizely.atlassian.net/browse/BUG-2364 is fixed
-                                            clearInterval(waitForUpdate);
-                                        }
-                                        index++;
-                                    }, 1000);
-
-                                }   
+                                    primary_goal_id = goal.id;    
+                                }  
                             })
                         });
                     }
                 }
+
+                // because of https://optimizely.atlassian.net/browse/BUG-2364 we might need
+                // to manually update the list and then set the primary goal
+                var waitForExperiment = setInterval(function() {
+                    if (optly.outstandingRequests == 0) {
+                        clearInterval(waitForExperiment);
+                        settings = {
+                            "display_goal_order_lst": goal_ids,
+                            "primary_goal_id": primary_goal_id
+                        };
+                        optly.put("experiments/" + experiment_id, settings, function(e) {});
+                    }
+                }, 300);
+
+
+
             }
 
             var experiment_definition = createExperimentDefinition();
@@ -274,12 +275,11 @@ window.optimizelyTemplateTool = {
             var waitForExperiment = setInterval(function() {
                 if (optly.outstandingRequests == 0) {
                     clearInterval(waitForExperiment);
-                    optimizelyTemplateTool.spinner('Forwarding to Optimizely editor…');
-
                     if (app_config.redirect_url == "NO_REDIRECT") {
                         optimizelyTemplateTool.spinner();
                     } else if (app_config.redirect_url === undefined) {
                         // just to be backward compatible but ideally no redirect_url would mean no redirect
+                        optimizelyTemplateTool.spinner('Forwarding to Optimizely editor…');
                         window.location.href = "https://www.optimizely.com/edit?experiment_id=" + experiment_id;
                     } else {
                         app_config.redirect_url = app_config.redirect_url.replace("{{Experiment ID}}", experiment_id);
