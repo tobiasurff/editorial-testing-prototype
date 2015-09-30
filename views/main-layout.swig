@@ -11,22 +11,14 @@
 	<title>Neon | Dashboard</title>
 
 	{% if config.environment == 'local'%}
-		<link rel="stylesheet" href="/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
-		<link rel="stylesheet" href="/css/font-icons/entypo/css/entypo.css">
-		<link rel="stylesheet" href="/css/font-icons/font-awesome/css/font-awesome.css">
-		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic">
-		<link rel="stylesheet" href="/css/bootstrap.css">
-		<link rel="stylesheet" href="/css/neon-core.css">
-		<link rel="stylesheet" href="/css/neon-theme.css">
-		<link rel="stylesheet" href="/css/neon-forms.css">
-		<link rel="stylesheet" href="/css/custom.css">
-		<link rel="stylesheet" href="/css/skins/white.css">
+    <title>Optimizely – Editorial Testing CMS-Prototype</title>
+    <!-- Local CSS -->
+    <link rel="stylesheet" href="css/lego.css">
+    <link rel="stylesheet" href="css/codemirror.css">
+    <link rel="stylesheet" href="css/custom.css">
 	{% else %}
 		<link rel="stylesheet" href="/css/main.min.css">
 	{% endif %}
-
-	<script src="/js/jquery-1.11.0.min.js"></script>
-	<script>$.noConflict();</script>
 
 	<!--[if lt IE 9]><script src="/js/ie8-responsive-file-warning.js"></script><![endif]-->
 
@@ -40,169 +32,88 @@
 </head>
 <body class="page-body page-fade">
 
-<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
-	<div class="sidebar-menu">
-		<div class="sidebar-menu-inner">
-			<header class="logo-env">
-				<!-- logo -->
-				<div class="logo">
-					<a href="index.html">
-						<img src="/images/logo@2x.png" width="120" alt="" />
-					</a>
-				</div>
-				<!-- logo collapse icon -->
-				<div class="sidebar-collapse">
-					<a href="#" class="sidebar-collapse-icon"><!-- add class "with-animation" if you want sidebar to have animation during expanding/collapsing transition -->
-						<i class="entypo-menu"></i>
-					</a>
-				</div>				
-				<!-- open/close menu icon (do not remove if you want to enable menu on mobile devices) -->
-				<div class="sidebar-mobile-menu visible-xs">
-					<a href="#" class="with-animation"><!-- add class "with-animation" to support animation -->
-						<i class="entypo-menu"></i>
-					</a>
-				</div>
-			</header>
-			
-									
-			<ul id="main-menu" class="main-menu">
-				<!-- add class "multiple-expanded" to allow multiple submenus to open -->
-				<!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
-				<li class="active opened">
-					<a href="index.html">
-						<span class="title">Account 1</span>
-					</a>
-					<ul>
-						<li>
-							<a href="/">
-								<i class="fa fa-flask fa-fw"></i>
-								<span class="title">Experiments</span>
-							</a>
-						</li>
-						<li>
-							<a href="/goals">
-								<i class="fa fa-line-chart fa-fw"></i>
-								<span class="title">Goals</span>
-							</a>
-						</li>
-					</ul>
-				</li>
-				<li class="">
-					<a href="/">
-						<span class="title">Account 1</span>
-					</a>
-					<ul>
-						<li>
-							<a href="/">
-								<i class="fa fa-flask fa-fw"></i>
-								<span class="title">Experiments</span>
-							</a>
-						</li>
-						<li>
-							<a href="/goals">
-								<i class="fa fa-line-chart fa-fw"></i>
-								<span class="title">Goals</span>
-							</a>
-						</li>
-					</ul>
-				</li>
-
-				<li class="">
-					<a href="/new-account">
-						<i class="entypo-plus-circled"></i>
-						<span class="title">New Account</span>
-					</a>
-				</li>
-
-			</ul>
-		</div>
-	</div>
-
-	<div class="main-content">
-				
-		<div class="row">
-			<!-- Profile Info and Notifications -->
-			<div class="col-md-6 col-sm-8 clearfix">
-		
-				<ul class="user-info pull-left pull-none-xsm">
-		
-					<!-- Profile Info -->
-					<li class="profile-info dropdown"><!-- add class "pull-right" if you want to place this from right -->
-		
-						<a class="dropdown-toggle">
-							<img src="/images/thumb-1@2x.png" alt="" class="img-circle" width="44" />
-							Brad Taylor
-						</a>
-					</li>
-		
-				</ul>
-			</div>
-		
-		
-			<!-- Raw Links -->
-			<div class="col-md-6 col-sm-4 clearfix hidden-xs">
-		
-				<ul class="list-inline links-list pull-right">
-					<li>
-						<a href="extra-login.html">
-							Log Out <i class="entypo-logout right"></i>
-						</a>
-					</li>
-				</ul>
-		
-			</div>
-		</div>
-
-		<hr />
-		
-
-		{% block content %}{% endblock %}
-
-		<!-- Footer -->
-		<footer class="main">
-			
-			&copy; 2015 <strong>Optimizely</strong>
-		
-		</footer>
-	</div><!-- end sidebar-menu -->
-</div><!-- End page-container -->
-
-
+    <header id="header" class="header">
+        <span class="display--inline-block" href="/">
+            <img src="images/optimizely-white.svg" alt="Optimizely" id="logo" width="400px">
+        </span>
+    </header>
+    <div class="content">
+        <div id="step_configure" class="step">
+            <h1>Configure this tool for your site</h1>
+            <form>
+                <fieldset>
+                    <ol class="lego-form-fields">
+                        <li class="lego-form-field__item">
+                            <label class="lego-label">Experiment Template (in JSON format)</label>
+                            <textarea type="text" class="configuration lego-text-input" id="configuration"></textarea>
+                            <div class="lego-form-note">Paste in the experiment template (in JSON format) you’d like to use. You can find a boiletplate template in this <a href="">GitHub repository</a>.</div>
+                        </li>
+                    </ol>
+                </fieldset>
+                <div class="lego-form__footer lego-button-row lego-button-row--right">
+                    <!--button class="cancel lego-button">Cancel</button-->
+                    <button class="save lego-button lego-button--highlight">Save</button>
+                </div>
+            </form>
+        </div>
+        <div id="step_connect" class="step">
+            <h1>Login and connect your Optimizely account</h1>
+            <p>To create a new experiment, please connect to your Optimizely account. Your session will be valid for 10 minute after login.</p>
+            <p><img src="images/connect-optimizely.svg" alt="Connect with Optimizely" id="connect_to_optly"></p>
+        </div>
+        <div id="step_experiment" class="step">
+            <div class="float--right">
+                <svg class="lego-icon" id="settings_icon" v-poptip data-dir="bottom-right" data-content="Experiment Template Settings (Advanced)">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#settings"></use>
+                </svg>
+            </div>
+            <h1>Create an experiment</h1>
+            <form>
+                <div class="lego-form__header">
+                    <div class="lego-form__title">Experiment-level details</div>
+                </div>
+                <fieldset>
+                    <ul class="lego-form-fields" id="experiment-level">
+                        
+                    </ul>
+                </fieldset>
+                <div class="lego-form__header">
+                    <div class="lego-form__title">Variation-level details</div>
+                </div>
+                <fieldset>
+                    <ul class="lego-form-fields" id="variation-level">
+                        
+                    </ul>
+                </fieldset>
+                <div class="lego-form__footer lego-button-row lego-button-row--right">
+                    <button class="lego-button">Cancel</button>
+                    <input type="submit" class="lego-button lego-button--highlight" value="Continue">
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="overlay" class=" text--center">
+        <div class="content">
+            <div class="lego-spinner-wrap">
+                <div class="lego-spinner"></div>
+            </div>
+            <h2 id="status"></h2></div>
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/lego.min.js"></script>
+    <script src="js/codemirror.js"></script>
+    <script src="https://api.filepicker.io/v2/filepicker.js"></script>
+    <script src="js/optimizely-framework.js"></script>
+    <script src="js/custom.js"></script>
+    <!-- Icon repository -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol id="settings" viewBox="0 0 32 32">
+            <path d="M30.8 13.5l-3.1-.5c-.2-.9-.6-1.8-1-2.6l2-2.5c.4-.5.4-1.3 0-1.8l-1.2-1.4c-.5-.6-1.3-.7-1.8-.3L23 6.1c-1.2-.8-2.5-1.4-4-1.8l-.5-3.1C18.4.5 17.8 0 17.2 0h-1.9c-.7 0-1.3.5-1.4 1.2l-.5 3.1c-1.2.3-2.3.8-3.3 1.4L7.5 3.9c-.5-.4-1.3-.4-1.8.1L4.4 5.3c-.5.5-.5 1.3-.1 1.8l1.8 2.6c-.6 1-1.1 2.1-1.4 3.3l-3.2.5c-.7.1-1.2.7-1.2 1.4v1.9c0 .7.5 1.3 1.2 1.4l3.2.5c.2 1 .6 1.9 1 2.8l-2 2.5c-.4.5-.4 1.3 0 1.8l1.2 1.4c.5.5 1.2.6 1.8.3l2.7-1.7c1.1.8 2.4 1.4 3.8 1.7l.5 3.1c.1.7.7 1.2 1.4 1.2H17c.7 0 1.3-.5 1.4-1.2l.5-3.1c1.2-.3 2.3-.7 3.3-1.4l2.7 1.9c.5.4 1.3.3 1.8-.1l1.3-1.3c.5-.5.5-1.2.1-1.8l-1.9-2.6c.6-1 1.1-2.1 1.4-3.3l3.1-.5c.7-.1 1.2-.7 1.2-1.4v-1.9c.1-.9-.4-1.5-1.1-1.6zm-14.6 8.2c-3.3 0-5.9-2.7-5.9-5.9 0-3.3 2.7-5.9 5.9-5.9 3.3 0 5.9 2.7 5.9 5.9.1 3.3-2.6 5.9-5.9 5.9z" />
+        </symbol>
+    </svg>
 
 	{% if config.environment == 'local'%}
 
-		<!-- Imported styles on this page -->
-		<link rel="stylesheet" href="/js/datatables/responsive/css/datatables.responsive.css">
-		<link rel="stylesheet" href="/js/select2/select2-bootstrap.css">
-		<link rel="stylesheet" href="/js/select2/select2.css">
-		<link rel="stylesheet" href="/js/selectboxit/jquery.selectBoxIt.css">
-		<link rel="stylesheet" href="/js/daterangepicker/daterangepicker-bs3.css">
-
-		<!-- Bottom scripts (common) -->
-		<script src="/js/gsap/main-gsap.js"></script>
-		<script src="/js/jquery-ui/js/jquery-ui-1.10.3.minimal.min.js"></script>
-		<script src="/js/bootstrap.js"></script>
-		<script src="/js/joinable.js"></script>
-		<script src="/js/resizeable.js"></script>
-		<script src="/js/neon-api.js"></script>
-		<script src="/js/jquery.dataTables.min.js"></script>
-		<script src="/js/datatables/TableTools.min.js"></script>
-		<script src="/js/toastr.js"></script>
-		<script src="/js/dataTables.bootstrap.js"></script>
-		<script src="/js/datatables/jquery.dataTables.columnFilter.js"></script>
-		<script src="/js/datatables/lodash.min.js"></script>
-		<script src="/js/datatables/responsive/js/datatables.responsive.js"></script>
-		<script src="/js/daterangepicker/moment.min.js"></script>
-		<script src="/js/daterangepicker/daterangepicker.js"></script>
-		<script src="/js/raphael-min.js"></script>
-		<script src="/js/morris.min.js"></script>
-		<script src="/js/select2/select2.min.js"></script>
-		<script src="/js/selectboxit/jquery.selectBoxIt.min.js"></script>
-		<script src="/js/select2/select2.min.js"></script>
-		<!-- JavaScripts initializations and stuff -->
-		<script src="/js/neon-custom.js"></script>
-		<!-- Demo Settings -->
-		<script src="/js/neon-demo.js"></script>
 	{% else %}
 		<script src="/js/main.min.js"></script>
 	{% endif %}

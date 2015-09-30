@@ -7,6 +7,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
+var React = require('react');
 var bodyParser = require('body-parser');
 var swig = require('swig');
 var env = require('./config/' + process.env.NODE_ENV);
